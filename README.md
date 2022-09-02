@@ -1,9 +1,11 @@
 # Billow
+[![Crates.io](https://img.shields.io/crates/v/billow.svg?color=blue)](https://crates.io/crates/billow)
+[![Billow documentation](https://docs.rs/billow/badge.svg)](https://docs.rs/billow)
 
 Rust implementation of the wave function collapse algorithm.
 Based on [Oskar Stålberg's](https://www.youtube.com/watch?v=0bcZb-SsnrA) and [Martin Donald](https://www.youtube.com/watch?v=2SuvO4Gi7uY) detailed explanation.
 
-> :construction: **This is a work in progress.**
+> 🚧 **This is a work in progress.**
 
 
 ## Usage
