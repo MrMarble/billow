@@ -4,6 +4,7 @@ version = "0.1.0"
 edition = "2021"
 authors = ["MrMarble"]
 description = "Simple Wave Function Collapse implementation in Rust"
+license = "GPL-3.0"
 
 [features]
 default = ["image"]
@@ -15,11 +16,10 @@ rand = "0.8.5"
 sha2 = "0.10.2"
 image = {version= "0.24.3", optional = true}
 bevy = {version = "0.8.1", optional = true}
-gif = "0.11.4"
-rayon = "1.5.3"
 
 [dev-dependencies]
 criterion = "0.3.6"
+gif = "0.11.4"
 
 [[bench]]
 name = "wave"

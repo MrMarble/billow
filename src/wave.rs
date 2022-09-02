@@ -1,5 +1,4 @@
 use rand::seq::IteratorRandom;
-use rayon::prelude::*;
 
 use crate::{conector::ConnectorID, direction::Direction, module::Module, slot::Slot};
 
