@@ -47,7 +47,7 @@ impl Wave {
     }
 
     pub fn with_custom_constraint(
-        input: &Vec<Box<dyn Image>>,
+        input: &[Box<dyn Image>],
         width: usize,
         height: usize,
         custom_contraint_fn: Box<dyn Fn(&Box<dyn Image>, Direction) -> ConnectorID>,
@@ -59,8 +59,7 @@ impl Wave {
 
             // Initialize the connectors.
             for direction in Direction::all() {
-                module.connectors[direction as usize] =
-                    custom_contraint_fn(image.clone(), direction);
+                module.connectors[direction as usize] = custom_contraint_fn(image, direction);
             }
             modules.push(module);
         }
@@ -155,8 +154,8 @@ impl Wave {
     fn get_possible_modules(&self, a: &Slot, b: &Slot, direction: Direction) -> Vec<Module> {
         let mut possible_modules = Vec::new();
         for module in &b.superposition {
-            if (self.is_possible_fn)(module.clone(), a.clone(), b.clone(), direction) {
-                possible_modules.push(module.clone());
+            if (self.is_possible_fn)(*module, a.clone(), b.clone(), direction) {
+                possible_modules.push(*module);
             }
         }
         possible_modules
@@ -168,7 +167,7 @@ impl Wave {
             return Ok(());
         }
 
-        if self.history.len() == 0 {
+        if self.history.is_empty() {
             if let Some(slot) = self.collapse_least_entropy() {
                 self.history.push(slot);
             } else {
@@ -199,7 +198,7 @@ impl Wave {
                 self.grid[next_slot.y * self.width + next_slot.x] = next_slot.clone();
             }
 
-            if next_slot.superposition.len() == 0 {
+            if next_slot.superposition.is_empty() {
                 return Err(format!(
                     "No possible modules for slot ({}, {})",
                     next_slot.x, next_slot.y
@@ -212,7 +211,7 @@ impl Wave {
             }
             self.history.pop();
         }
-        return Ok(());
+        Ok(())
     }
 
     /// Run `attemps` iterations of the algorithm.

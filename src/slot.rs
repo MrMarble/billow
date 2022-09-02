@@ -16,7 +16,7 @@ pub struct Slot {
 impl Slot {
     pub fn collapse(&mut self) {
         if let Some(module) = self.superposition.choose(&mut rand::thread_rng()) {
-            self.superposition = vec![module.clone()];
+            self.superposition = vec![*module];
         }
     }
 }

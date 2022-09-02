@@ -22,7 +22,7 @@ impl Module {
         let back = dir.reverse();
 
         for slot in from.superposition.iter() {
-            if self.connectors[back.clone() as usize] == slot.connectors[dir.clone() as usize] {
+            if self.connectors[back as usize] == slot.connectors[dir as usize] {
                 return true;
             }
         }

@@ -4,7 +4,7 @@ use std::fmt;
 ///
 /// Also used to represent the index of the neighbors of a slot.
 /// Up = 0, Right = 1, Down = 2, Left = 3
-#[derive(Debug, PartialEq, Clone, Copy)]
+#[derive(Debug, PartialEq, Eq, Clone, Copy)]
 pub enum Direction {
     Up,
     Right,
