@@ -13,10 +13,11 @@ Based on [Oskar Stålberg's](https://www.youtube.com/watch?v=0bcZb-SsnrA) and [M
 This is a general purpose library, I provide implementations for the `image::DynamicImage` and `bevy::prelude::Image` types.
 
 ```rust
-use billow::{Wave, Image};
+use billow::Wave;
+use image::DynamicImage;
 
 fn main() {
-    let input: Vec<Box<dyn Image>> = load_assets("assets/basic");
+    let input: Vec<DynamicImage> = load_assets("assets/basic");
     let (width, height) = (20usize, 20usize);
 
     // New wave with a 20x20 grid
@@ -33,4 +34,4 @@ fn main() {
 }
 ```
 
-See [examples](examples) for more.
+See [examples](examples/README.md) for more.
