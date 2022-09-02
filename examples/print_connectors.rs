@@ -1,3 +1,7 @@
+//! An example of calculating the connectorID.
+//!
+//! `cargo run --release --example print_connectors`
+
 #[cfg(feature = "image")]
 use billow::{get_constraint_fn, Direction, Image};
 
@@ -22,7 +26,7 @@ fn load_assets(path: &str) -> (Vec<String>, Vec<Box<dyn Image>>) {
 }
 #[cfg(feature = "image")]
 fn main() {
-    let assets = load_assets("examples/assets/basic");
+    let assets = load_assets("assets/basic");
 
     let constraint_fn = get_constraint_fn(1);
 
