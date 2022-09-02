@@ -1,6 +1,6 @@
 [package]
 name = "billow"
-version = "1.0.0"
+version = "0.2.0"
 edition = "2021"
 authors = ["MrMarble"]
 description = "Simple Wave Function Collapse implementation in Rust"
@@ -16,8 +16,8 @@ bevy = ["dep:bevy"]
 [dependencies]
 rand = "0.8.5"
 sha2 = "0.10.2"
-image = {version= "0.24.3", optional = true}
-bevy = {version = "0.8.1", optional = true}
+image = { version = "0.24.3", optional = true }
+bevy = { version = "0.8.1", optional = true }
 
 [dev-dependencies]
 criterion = "0.3.6"
