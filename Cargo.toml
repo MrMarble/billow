@@ -5,6 +5,8 @@ edition = "2021"
 authors = ["MrMarble"]
 description = "Simple Wave Function Collapse implementation in Rust"
 license = "GPL-3.0"
+repository = "https://github.com/mrmarble/billow"
+keywords = ["wave", "function", "collapse", "rust"]
 
 [features]
 default = ["image"]
