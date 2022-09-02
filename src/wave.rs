@@ -7,6 +7,8 @@ pub trait Image {
     fn get_pixel_at(&self, x: usize, y: usize) -> [u8; 4];
 }
 
+pub type ConstraintFn = dyn Fn(&dyn Image, Direction) -> ConnectorID;
+pub type PossibleFn = dyn Fn(Module, Slot, Slot, Direction) -> bool;
 /// Wave holds the state of a wave collapse function.
 pub struct Wave {
     /// Width of the grid.
@@ -22,7 +24,7 @@ pub struct Wave {
     pub history: Vec<Slot>,
 
     /// Override this function to change the behavior of the wave collapse function.
-    pub is_possible_fn: Box<dyn Fn(Module, Slot, Slot, Direction) -> bool>,
+    pub is_possible_fn: Box<PossibleFn>,
 }
 
 impl Default for Wave {
@@ -42,15 +44,15 @@ impl Wave {
     /// Create a new wave collapse function with the given width and height.
     /// The default constraint function will check 3 pixels in each direction.
     /// Use `with_custom_constraint` to override the default behavior of the wave collapse function.
-    pub fn new(input: &Vec<Box<dyn Image>>, width: usize, height: usize) -> Self {
+    pub fn new(input: &[impl Image], width: usize, height: usize) -> Self {
         Wave::with_custom_constraint(input, width, height, get_constraint_fn(3))
     }
 
     pub fn with_custom_constraint(
-        input: &[Box<dyn Image>],
+        input: &[impl Image],
         width: usize,
         height: usize,
-        custom_contraint_fn: Box<dyn Fn(&Box<dyn Image>, Direction) -> ConnectorID>,
+        custom_contraint_fn: Box<ConstraintFn>,
     ) -> Self {
         let mut modules: Vec<Module> = vec![];
 
@@ -206,9 +208,7 @@ impl Wave {
             }
 
             self.history.push(next_slot.clone());
-            if let Err(err) = self.recurse() {
-                return Err(err);
-            }
+            self.recurse()?;
             self.history.pop();
         }
         Ok(())
@@ -232,12 +232,10 @@ impl Wave {
 /// Only modules that have the same `connector` as the slot's module are considered possible.
 /// The default constraint function checks pixel equality.
 /// Use the `sample_size` to control the number of pixels to compare on each side of the slot.
-pub fn get_constraint_fn(
-    sample_size: usize,
-) -> Box<dyn Fn(&Box<dyn Image>, Direction) -> ConnectorID> {
+pub fn get_constraint_fn(sample_size: usize) -> Box<ConstraintFn> {
     let count = sample_size + 1; // +1 for the center pixel
 
-    Box::new(move |img: &Box<dyn Image>, dir: Direction| {
+    Box::new(move |img: &dyn Image, dir: Direction| {
         let (w, h) = img.size();
 
         let dx = w / count;

@@ -17,14 +17,8 @@ fn main() {
     // Tile size
     let asset_size = assets[0].dimensions().0 as usize;
 
-    // Convert the assets to billow::Image
-    let mut input: Vec<Box<dyn billow::Image>> = vec![];
-    assets.iter().for_each(|asset| {
-        input.push(Box::new(asset.clone()));
-    });
-
     // Create and initialize wave.
-    let mut wave = billow::Wave::new(&input, width, height);
+    let mut wave = billow::Wave::new(&assets, width, height);
     wave.initialize();
 
     let image = File::create("examples/output.gif").unwrap();

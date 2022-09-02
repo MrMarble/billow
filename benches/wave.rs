@@ -1,17 +1,18 @@
-use billow::{Image, Wave};
+use billow::Wave;
 use criterion::{black_box, criterion_group, criterion_main, BenchmarkId, Criterion};
+use image::DynamicImage;
 
-fn load_assets(folder: &str) -> Vec<Box<dyn Image>> {
+fn load_assets(folder: &str) -> Vec<DynamicImage> {
     let path = format!("assets/{}", folder);
 
-    let mut images: Vec<Box<dyn Image>> = Vec::new();
+    let mut images: Vec<DynamicImage> = Vec::new();
     for entry in std::fs::read_dir(path).unwrap() {
         let entry = entry.unwrap();
         let path = entry.path();
         let ext = path.extension().unwrap().to_str().unwrap();
         if ext == "png" || ext == "jpg" {
             match image::open(path) {
-                Ok(image) => images.push(Box::new(image)),
+                Ok(image) => images.push(image),
                 Err(err) => {
                     panic!("Failed to load image: {}", err)
                 }
